@@ -1,0 +1,11 @@
+<resources>
+<string name="app_name">TizenCommunication</string>
+<string name="title_home">Home</string>
+<string name="title_dashboard">Dashboard</string>
+<string name="title_notifications">Notifications</string>
+<string name="NoPeersFound">No peers have been found!!!</string>
+<string name="start">Start</string>
+<string name="viewdata">ViewData</string>
+<string name="coonecttest">Find Agent</string>
+</resources>
+
