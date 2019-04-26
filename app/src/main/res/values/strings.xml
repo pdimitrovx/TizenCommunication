@@ -1,11 +1,26 @@
 <resources>
-<string name="app_name">TizenCommunication</string>
-<string name="title_home">Home</string>
-<string name="title_dashboard">Dashboard</string>
-<string name="title_notifications">Notifications</string>
-<string name="NoPeersFound">No peers have been found!!!</string>
-<string name="start">Start</string>
-<string name="viewdata">ViewData</string>
-<string name="coonecttest">Find Agent</string>
+    <string name="app_name">TizenCommunication</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="NoPeersFound">No peers have been found!!!</string>
+    <string name="start">Start</string>
+    <string name="viewdata">ViewData</string>
+    <string name="coonecttest">Find Agent</string>
+    <string-array name="spinner_time_array">
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+        <item>180</item>
+        <item>360</item>
+    </string-array>
+    <string-array name="spinner_sensor_array">
+        <item>Heart Rate</item>
+        <item>Accelerometer</item>
+        <item>Heart Rate &amp; Acc</item>
+      </string-array>
 </resources>
 

@@ -10,8 +10,10 @@ import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class MainActivity extends Activity {
     private boolean isServiceBound = false;
     private static boolean start_Btn_clicked;
     private Service_SAP mConsumerService = null;
+
+    private Spinner spinner_time, spinner_sensor;
 
 
     @Override
@@ -70,7 +74,7 @@ public class MainActivity extends Activity {
             }
             case R.id.start_btn: {
                 if (isServiceBound == true && start_Btn_clicked == false && mConsumerService != null) {
-                    if (mConsumerService.sendData("Hello Message!") != -1) {
+                    if (mConsumerService.sendData(":300:505:Hello Message!") != -1) {
                         //todo wtf is it sendButtonClicked = true;
                         start_Btn_clicked = true;
                     } else {
@@ -181,6 +185,17 @@ public class MainActivity extends Activity {
             super();
             this.data = data;
         }
+    }
+
+    public void initializeSpinners() {
+        spinner_time = findViewById(R.id.time_spinner);
+        spinner_sensor = findViewById(R.id.sensor_spinner);
+
+        // Create an ArrayAdapter with array of strings w.\ default spinner layout
+        ArrayAdapter<CharSequence> adapter_spinner_time = ArrayAdapter.createFromResource(this,
+                R.array.spinner_time_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_spinner_sensor = ArrayAdapter.createFromResource(this,
+                R.array.spinner_sensor_array, android.R.layout.simple_spinner_item);
     }
 
 }

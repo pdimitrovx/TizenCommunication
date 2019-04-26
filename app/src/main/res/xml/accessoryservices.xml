@@ -34,8 +34,8 @@
 
     <application name="TizenCommunication" >
         <serviceProfile
-            id="/sample/hellomessage"
-            name="hellomessage"
+            id="/sample/tizencommunication"
+            name="tizencommunication"
             role="consumer"
             serviceImpl="uk.ac.aber.dcs.pid4.tizencommunication.Service_SAP"
             version="1.0">
