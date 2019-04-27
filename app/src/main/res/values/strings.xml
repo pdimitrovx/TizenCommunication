@@ -6,7 +6,7 @@
     <string name="NoPeersFound">No peers have been found!!!</string>
     <string name="start">Start</string>
     <string name="viewdata">ViewData</string>
-    <string name="coonecttest">Find Agent</string>
+    <string name="coonecttest">Initialize Connection</string>
     <string-array name="spinner_time_array">
         <item>5</item>
         <item>10</item>

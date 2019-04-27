@@ -183,7 +183,7 @@ public class Service_SAP extends SAAgent {
         int tid;
 
         if(mSAPeerAgent == null) {
-            Toast.makeText(getApplicationContext(),"Try to find PeerAgent!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Try to find PeerAgent (Initialize) !", Toast.LENGTH_SHORT).show();
             return -1;
         }
         if (mMessage != null) {

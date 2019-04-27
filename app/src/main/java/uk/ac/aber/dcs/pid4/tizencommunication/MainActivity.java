@@ -12,13 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import uk.ac.aber.dcs.pid4.tizencommunication.Tizen_Message;
+
+import static android.widget.Toast.makeText;
 
 public class MainActivity extends Activity {
     private static TextView mTextStatus; //navigation stuff (used to display status app)
@@ -27,14 +33,16 @@ public class MainActivity extends Activity {
     private boolean isServiceBound = false;
     private static boolean start_Btn_clicked;
     private Service_SAP mConsumerService = null;
-
+    private boolean watch_is_connected = false;
     private Spinner spinner_time, spinner_sensor;
+    private Button startReadingBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeSpinners();
         start_Btn_clicked = false;
         mTextStatus = findViewById(R.id.app_status);
         //todo rename and tidy list view
@@ -44,6 +52,7 @@ public class MainActivity extends Activity {
         // Bind service
         isServiceBound = bindService(new Intent(MainActivity.this,
                 Service_SAP.class), mConnection, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -63,24 +72,55 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
+    //CHeck if watch is connected
     public void mOnClick(View v) {
         switch (v.getId()) {
             case R.id.findPeerAgentBtn: {
                 if (isServiceBound == true && mConsumerService != null) {
                     mConsumerService.findPeers();
                     start_Btn_clicked = false;
+                    watch_is_connected = true;
+                    Toast toast_is_watch_connected = makeText(this, "The watch is ready", Toast.LENGTH_SHORT);
+                    toast_is_watch_connected.show();
+
+                } else {
+                    watch_is_connected = false;
+                    Toast toast_is_watch_connected = makeText(this, "Connectivity issue!", Toast.LENGTH_SHORT);
+                    toast_is_watch_connected.show();
                 }
                 break;
             }
             case R.id.start_btn: {
-                if (isServiceBound == true && start_Btn_clicked == false && mConsumerService != null) {
-                    if (mConsumerService.sendData(":300:505:Hello Message!") != -1) {
-                        //todo wtf is it sendButtonClicked = true;
-                        start_Btn_clicked = true;
+                if (isServiceBound && !start_Btn_clicked && mConsumerService != null) {
+
+                    int sensor_type_selected = spinner_sensor.getSelectedItemPosition();
+                    int sensor_time_selected = spinner_time.getSelectedItemPosition();
+
+                    if (sensor_type_selected >= 0 && sensor_type_selected <= 2) {
+                        if (sensor_time_selected >= 0 && sensor_time_selected <= 7) {
+                            Tizen_Message command_message_objbect = new Tizen_Message(sensor_type_selected, sensor_time_selected);
+                            String command_message = command_message_objbect.command_Builder();
+
+                            if (mConsumerService.sendData(command_message) != -1) {
+                                //startReadingBtn.setEnabled(false);
+                                start_Btn_clicked = true;
+                            } else {
+                                start_Btn_clicked = false;
+                            }
+
+                        } else {
+                            //some error or no selection
+                            Toast toast1 = makeText(this, "Select Time !!", Toast.LENGTH_SHORT);
+                            toast1.show();
+                        }
                     } else {
-                        //todo wtfff sendButtonClicked = false;
-                        start_Btn_clicked = false;
+                        //some error or no selection
+                        Toast toast2 = makeText(this, "Select Sensor !!", Toast.LENGTH_SHORT);
+                        toast2.show();
                     }
+                } else {
+                    Toast toast2 = makeText(this, "smtbroken", Toast.LENGTH_SHORT);
+                    toast2.show();
                 }
                 break;
             }
@@ -191,11 +231,21 @@ public class MainActivity extends Activity {
         spinner_time = findViewById(R.id.time_spinner);
         spinner_sensor = findViewById(R.id.sensor_spinner);
 
+        startReadingBtn = findViewById(R.id.start_btn);
+
         // Create an ArrayAdapter with array of strings w.\ default spinner layout
         ArrayAdapter<CharSequence> adapter_spinner_time = ArrayAdapter.createFromResource(this,
                 R.array.spinner_time_array, android.R.layout.simple_spinner_item);
+        adapter_spinner_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         ArrayAdapter<CharSequence> adapter_spinner_sensor = ArrayAdapter.createFromResource(this,
                 R.array.spinner_sensor_array, android.R.layout.simple_spinner_item);
+        adapter_spinner_sensor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //set adapters
+        spinner_time.setAdapter(adapter_spinner_time);
+        spinner_sensor.setAdapter(adapter_spinner_sensor);
+
     }
 
 }
