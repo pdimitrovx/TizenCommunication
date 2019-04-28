@@ -116,6 +116,7 @@ public class Service_SAP extends SAAgent {
                 String dataVal = new String(message);
                 addMessage("Received: ", dataVal);
                 MainActivity.updateButtonState(false);
+                MainActivity.dataReceived(dataVal);
             }
         };
     }

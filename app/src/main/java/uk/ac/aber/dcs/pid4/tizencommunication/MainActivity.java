@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
+
+import org.apache.commons.lang3.StringUtils;
+
 
 import uk.ac.aber.dcs.pid4.tizencommunication.Tizen_Message;
 
@@ -119,11 +124,16 @@ public class MainActivity extends Activity {
                         toast2.show();
                     }
                 } else {
-                    Toast toast2 = makeText(this, "smtbroken", Toast.LENGTH_SHORT);
+                    Toast toast2 = makeText(this, "Error: Try initializing again", Toast.LENGTH_SHORT);
                     toast2.show();
                 }
                 break;
             }
+            case R.id.viewData_btn: {
+                mConsumerService.sendData("STOP");
+            }
+
+
             default:
         }
     }
@@ -246,6 +256,31 @@ public class MainActivity extends Activity {
         spinner_time.setAdapter(adapter_spinner_time);
         spinner_sensor.setAdapter(adapter_spinner_sensor);
 
+    }
+
+    //https://mvnrepository.com/artifact/org.apache.commons/commons-lang3/3.9
+    public static void dataReceived(String data_received) {
+        String extracted_command; //the data between the prefixes, start end
+        String sensor_identifier; //the first word in the message, i.e sensor identifier
+        String HRM_id = "HRM_START"; //the sensor identifier for Heart Rate Sensor
+
+        StringTokenizer sensor_type_tokenizer = new StringTokenizer(data_received, ":");
+        sensor_identifier = sensor_type_tokenizer.nextToken();
+
+        Log.d("data_received1", "First token is: " + sensor_identifier);
+
+        if (sensor_identifier.equals(HRM_id)) {
+            //data is from hrm sensor
+            extracted_command = StringUtils.substringBetween(data_received, "HRM_START:", ":END_HRM");
+            StringTokenizer sensor_data_tokenizer = new StringTokenizer(extracted_command, ":");
+            String heart_rate = sensor_data_tokenizer.nextToken();
+            String accuracy = sensor_data_tokenizer.nextToken();
+            String epoch_timestamp = sensor_data_tokenizer.nextToken();
+
+            Log.d("data_received", "heart_rate: " + heart_rate );
+            Log.d("data_received", "timestamp: " + epoch_timestamp );
+            Log.d("data_received", "accuracy: " + accuracy );
+        }
     }
 
 }
