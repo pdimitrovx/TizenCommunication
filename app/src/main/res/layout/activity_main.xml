@@ -44,45 +44,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="256dp"
-        android:text="@string/start"
+        android:layout_marginTop="8dp"
         android:onClick="mOnClick"
+        android:text="@string/start_measuring"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sensor_spinner" />
 
     <Button
-        android:id="@+id/viewData_btn"
+        android:id="@+id/stopReading_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/viewdata"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:onClick="mOnClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sensor_spinner" />
+        android:text="@string/stop_measuring"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_btn" />
 
     <Button
         android:id="@+id/findPeerAgentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/coonecttest"
         android:onClick="mOnClick"
-        app:layout_constraintBottom_toTopOf="@+id/viewData_btn"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="@string/initialize_connection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensor_spinner" />
 
     <ListView
         android:id="@+id/lvMessage"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="381dp"
+        android:layout_height="432dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/findPeerAgentBtn"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sensor_spinner"></ListView>
-
+        app:layout_constraintTop_toBottomOf="@+id/stopReading_btn"></ListView>
 
 
 </android.support.constraint.ConstraintLayout>

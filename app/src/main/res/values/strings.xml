@@ -4,9 +4,9 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="NoPeersFound">No peers have been found!!!</string>
-    <string name="start">Start</string>
-    <string name="viewdata">ViewData</string>
-    <string name="coonecttest">Initialize Connection</string>
+    <string name="start_measuring">Start</string>
+    <string name="stop_measuring">Stop</string>
+    <string name="initialize_connection">Initialize Connection</string>
     <string-array name="spinner_time_array">
         <item>5</item>
         <item>10</item>

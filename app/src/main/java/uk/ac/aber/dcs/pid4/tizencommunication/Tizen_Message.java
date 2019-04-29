@@ -5,10 +5,11 @@ import java.io.Serializable;
 public class Tizen_Message implements Serializable {
     private int duration, sensor_type;
     private int receiver_sensor_type;
-    private String receiver_reading_accuracy, receiver_reading_timestamp;
+    private String receiver_reading_accuracy;
     private String receiver_reading_heart_rate;
     private String receiver_reading_x, receiver_reading_y, receiver_reading_z;
     private String raw_data_whole_msg;
+    private String receiver_reading_timestamp;
 
 
     //Constructor for a start command message
