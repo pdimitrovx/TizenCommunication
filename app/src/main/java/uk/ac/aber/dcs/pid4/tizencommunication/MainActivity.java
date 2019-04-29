@@ -263,6 +263,7 @@ public class MainActivity extends Activity {
         String extracted_command; //the data between the prefixes, start end
         String sensor_identifier; //the first word in the message, i.e sensor identifier
         String HRM_id = "HRM_START"; //the sensor identifier for Heart Rate Sensor
+        String ACC_id = "ACC_START"; //the identifier for Accelerometer sensor
 
         StringTokenizer sensor_type_tokenizer = new StringTokenizer(data_received, ":");
         sensor_identifier = sensor_type_tokenizer.nextToken();
@@ -277,9 +278,25 @@ public class MainActivity extends Activity {
             String accuracy = sensor_data_tokenizer.nextToken();
             String epoch_timestamp = sensor_data_tokenizer.nextToken();
 
-            Log.d("data_received", "heart_rate: " + heart_rate );
-            Log.d("data_received", "timestamp: " + epoch_timestamp );
-            Log.d("data_received", "accuracy: " + accuracy );
+            Log.d("data_received", "heart_rate: " + heart_rate);
+            Log.d("data_received", "timestamp: " + epoch_timestamp);
+            Log.d("data_received", "accuracy: " + accuracy);
+        } else if (sensor_identifier.equals(ACC_id)) {
+            extracted_command = StringUtils.substringBetween(data_received, "ACC_START:", ":END_ACC");
+            StringTokenizer sensor_data_tokenizer = new StringTokenizer(extracted_command, ":");
+            String x_axis = sensor_data_tokenizer.nextToken();
+            String y_axis = sensor_data_tokenizer.nextToken();
+            String z_axis = sensor_data_tokenizer.nextToken();
+
+            String accuracy = sensor_data_tokenizer.nextToken();
+            String epoch_timestamp = sensor_data_tokenizer.nextToken();
+
+            Log.d("data_received", "x axis : " + x_axis);
+            Log.d("data_received", "y axis : " + y_axis);
+            Log.d("data_received", "z axis : " + z_axis);
+
+            Log.d("data_received", "timestamp: " + epoch_timestamp);
+            Log.d("data_received", "accuracy: " + accuracy);
         }
     }
 
